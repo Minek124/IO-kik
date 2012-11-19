@@ -24,5 +24,6 @@ public class MainActivity extends Activity {
     public void aboutClick(View view){
     }
     public void exitClick(View view){
+    	android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
