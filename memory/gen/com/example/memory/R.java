@@ -16,30 +16,43 @@ public final class R {
         public static final int tapeta=0x7f020002;
     }
     public static final class id {
-        public static final int about=0x7f07000a;
-        public static final int checkBox1=0x7f07000c;
-        public static final int easyString=0x7f070002;
-        public static final int exit=0x7f07000b;
-        public static final int hardString=0x7f070006;
-        public static final int hiscores=0x7f070008;
-        public static final int mediumString=0x7f070004;
-        public static final int menu_settings=0x7f07000d;
-        public static final int my_tabhost=0x7f070000;
-        public static final int newGameButton=0x7f070007;
-        public static final int sounds=0x7f070009;
-        public static final int tab1=0x7f070001;
-        public static final int tab2=0x7f070003;
-        public static final int tab3=0x7f070005;
+        public static final int about=0x7f070015;
+        public static final int easyButton=0x7f070017;
+        public static final int easyFirst=0x7f070005;
+        public static final int easySecond=0x7f070006;
+        public static final int easyString=0x7f070004;
+        public static final int easyThird=0x7f070007;
+        public static final int exit=0x7f070016;
+        public static final int hardButton=0x7f070019;
+        public static final int hardFirst=0x7f07000f;
+        public static final int hardSecond=0x7f070010;
+        public static final int hardString=0x7f07000e;
+        public static final int hardThird=0x7f070011;
+        public static final int hiscores=0x7f070013;
+        public static final int mediumButton=0x7f070018;
+        public static final int mediumFirst=0x7f07000a;
+        public static final int mediumSecond=0x7f07000b;
+        public static final int mediumString=0x7f070009;
+        public static final int mediumThird=0x7f07000c;
+        public static final int menu_settings=0x7f07001c;
+        public static final int musicCheckBox=0x7f07001b;
+        public static final int my_tabhost=0x7f070002;
+        public static final int newGameButton=0x7f070012;
+        public static final int soundCheckBox=0x7f07001a;
+        public static final int sounds=0x7f070014;
+        public static final int tab1=0x7f070003;
+        public static final int tab2=0x7f070008;
+        public static final int tab3=0x7f07000d;
+        public static final int textView1=0x7f070000;
+        public static final int textView2=0x7f070001;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
-        public static final int activity_easy_hiscores=0x7f030001;
-        public static final int activity_game=0x7f030002;
-        public static final int activity_hiscores=0x7f030003;
-        public static final int activity_main=0x7f030004;
-        public static final int activity_medium_hiscores=0x7f030005;
-        public static final int activity_newgame=0x7f030006;
-        public static final int activity_sounds=0x7f030007;
+        public static final int activity_game=0x7f030001;
+        public static final int activity_hiscores=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_newgame=0x7f030004;
+        public static final int activity_sounds=0x7f030005;
     }
     public static final class menu {
         public static final int activity_about=0x7f060000;
@@ -54,12 +67,19 @@ public final class R {
     public static final class string {
         public static final int about=0x7f040008;
         public static final int app_name=0x7f040000;
+        public static final int autor=0x7f040011;
+        public static final int difficulty=0x7f040018;
+        public static final int easy=0x7f040017;
         public static final int exit=0x7f040009;
+        public static final int hard=0x7f040015;
         public static final int hello_world=0x7f040001;
         public static final int hiscores=0x7f040007;
+        public static final int medium=0x7f040016;
         public static final int memory=0x7f04000a;
         public static final int menu_settings=0x7f040002;
+        public static final int music=0x7f040013;
         public static final int new_game=0x7f040005;
+        public static final int sound_effect=0x7f040014;
         public static final int sounds=0x7f040006;
         public static final int title_activity_about=0x7f04000d;
         public static final int title_activity_easy_hiscores=0x7f04000f;
@@ -69,6 +89,7 @@ public final class R {
         public static final int title_activity_medium_hiscores=0x7f040010;
         public static final int title_activity_newgame=0x7f04000e;
         public static final int title_activity_sounds=0x7f04000c;
+        public static final int version=0x7f040012;
     }
     public static final class style {
         public static final int AppTheme=0x7f050000;
