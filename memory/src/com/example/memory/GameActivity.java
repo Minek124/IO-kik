@@ -30,13 +30,14 @@ class DrawView extends View {
 		super(context);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void onDraw(Canvas canvas) {
 
 		maxW = canvas.getWidth();
 		int imgWidth = ((maxW - (10 * (maxX + 1))) / maxX);
 		for (int i = 0; i < 16; i++) {
-			obrazki[i] = obrazki[i].createScaledBitmap(obrazki[i], imgWidth, imgWidth, false);
+			obrazki[i] = obrazki[i].createScaledBitmap(obrazki[i], imgWidth,imgWidth, false);
 		}
 		int cordY = 10;
 		int cordX = 10;
@@ -57,12 +58,12 @@ class DrawView extends View {
 			cordX = 10;
 		}
 
-		String ttt = "maxX " + maxX + " " + maxY + " " + GameActivity.ileOdkrytych;
+		String ttt = "maxX " + maxX + " " + maxY + " "
+				+ GameActivity.ileOdkrytych;
 		canvas.drawText(ttt, 20, 400, paint);
 
 	}
 
-	
 }
 
 public class GameActivity extends Activity implements OnTouchListener {
@@ -71,9 +72,12 @@ public class GameActivity extends Activity implements OnTouchListener {
 	Random randomizer = new Random();
 	int maxX;
 	int maxY;
-	static int ileOdkrytych=0;
-	boolean czyDwie=false;
-	int paraX,paraY;
+	static int ileOdkrytych = 0;
+	boolean czyDwie = false;
+	int paraX, paraY;
+	boolean delay=false;
+	int imgX=-1;
+	int imgY=-1;
 
 	public void ustaw(int[][] tab, boolean[][] o) {
 		for (int i = 0; i < tab.length; i++) {
@@ -109,60 +113,83 @@ public class GameActivity extends Activity implements OnTouchListener {
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
+		
+		
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			int imgWidth = ((drawView.maxW - (10 * (maxX + 1))) / maxX);
+			int x = (int) event.getX();
+			int y = (int) event.getY();
+			imgX = -1;
+			imgY = -1;
+			
+			for (int i = 0; i < maxX; i++) {
+				if ((x >= (10 * (i + 1) + imgWidth * i))
+						&& (x <= (10 * (i + 1) + imgWidth * (i + 1)))) {
+					imgX = i;
+				}
+			}
+			for (int i = 0; i < maxY; i++) {
+				if ((y >= (10 * (i + 1) + imgWidth * i))
+						&& (y <= (10 * (i + 1) + imgWidth * (i + 1)))) {
+					imgY = i;
+				}
+			}
+			
+			if ((imgX != -1) && (imgY != -1)) {
+				if (!drawView.odkryta[imgY][imgX]) {
 
-		int imgWidth = ((drawView.maxW - (10 * (maxX + 1))) / maxX);
-		int x=(int) event.getX();
-		int y=(int) event.getY();
-		int imgX=-1;
-		int imgY=-1;
+					ileOdkrytych++;
+					if (ileOdkrytych == (maxX * maxY)) {
+						android.os.Process.killProcess(android.os.Process
+								.myPid());
+					}
 
-		for(int i=0;i<maxX;i++){
-			if((x>=(10*(i+1)+imgWidth*i))&& (x<=(10*(i+1)+imgWidth*(i+1)))){
-				imgX=i;
+					drawView.odkryta[imgY][imgX] = true;
+					drawView.invalidate();
+
+					if (!czyDwie) {
+						paraX = imgX;
+						paraY = imgY;
+						delay=false;
+					}
+					if (czyDwie) {
+						delay=true;
+						/*if (drawView.tab[imgY][imgX] != drawView.tab[paraY][paraX]) {
+							drawView.odkryta[imgY][imgX] = false;
+							drawView.odkryta[paraY][paraX] = false;
+							ileOdkrytych = ileOdkrytych - 2;
+						}*/
+					}
+					czyDwie = !czyDwie;
+
+				}
 			}
 		}
-		for(int i=0;i<maxY;i++){
-			if((y>=(10*(i+1)+imgWidth*i))&& (y<=(10*(i+1)+imgWidth*(i+1)))){
-				imgY=i;
-			}
-		}
-		if((imgX!=-1)&&(imgY!=-1)){
-			if(!drawView.odkryta[imgY][imgX]){
-				
-				ileOdkrytych++;
-				if(ileOdkrytych==(maxX*maxY)){
-					android.os.Process.killProcess(android.os.Process.myPid());
-				}
-				
-				drawView.odkryta[imgY][imgX]=true;
-				drawView.invalidate();
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+			if (delay) {
 
-				
-				if(!czyDwie){
-					paraX=imgX;
-					paraY=imgY;
-				}
-				if(czyDwie){
-					if(drawView.tab[imgY][imgX]!=drawView.tab[paraY][paraX]){
-						drawView.odkryta[imgY][imgX]=false;
-						drawView.odkryta[paraY][paraX]=false;
-						ileOdkrytych=ileOdkrytych-2;
+				if ((imgX != -1) && (imgY != -1)) {
+					if (drawView.tab[imgY][imgX] != drawView.tab[paraY][paraX]) {
+						drawView.odkryta[imgY][imgX] = false;
+						drawView.odkryta[paraY][paraX] = false;
+						ileOdkrytych = ileOdkrytych - 2;
+						drawView.postInvalidateDelayed(1000);
+						
 					}
 				}
-				czyDwie=!czyDwie;
-				
 			}
 		}
-		
 		return true;
 	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 
 		Intent intent = getIntent();
-		int difficulty = intent.getIntExtra("difficulty", 6);
+		int difficulty =1;
+		difficulty = intent.getIntExtra("difficulty", 6);
 		drawView = new DrawView(this);
 		drawView.setBackgroundColor(Color.MAGENTA);
 		drawView.diff = difficulty;
@@ -171,8 +198,8 @@ public class GameActivity extends Activity implements OnTouchListener {
 		case 1:
 			maxX = 4;
 			maxY = 4;
-			drawView.maxX=maxX;
-			drawView.maxY=maxY;
+			drawView.maxX = maxX;
+			drawView.maxY = maxY;
 			drawView.tab = new int[maxY][maxX];
 			drawView.odkryta = new boolean[maxY][maxX];
 			ustaw(drawView.tab, drawView.odkryta);
@@ -180,8 +207,8 @@ public class GameActivity extends Activity implements OnTouchListener {
 		case 2:
 			maxX = 4;
 			maxY = 5;
-			drawView.maxX=maxX;
-			drawView.maxY=maxY;
+			drawView.maxX = maxX;
+			drawView.maxY = maxY;
 			drawView.tab = new int[maxY][maxX];
 			drawView.odkryta = new boolean[maxY][maxX];
 			ustaw(drawView.tab, drawView.odkryta);
@@ -189,14 +216,14 @@ public class GameActivity extends Activity implements OnTouchListener {
 		case 3:
 			maxX = 5;
 			maxY = 6;
-			drawView.maxX=maxX;
-			drawView.maxY=maxY;
+			drawView.maxX = maxX;
+			drawView.maxY = maxY;
 			drawView.tab = new int[maxY][maxX];
 			drawView.odkryta = new boolean[maxY][maxX];
 			ustaw(drawView.tab, drawView.odkryta);
 			break;
 		default:
-			
+
 		}
 
 		Resources res = getResources();
@@ -234,9 +261,9 @@ public class GameActivity extends Activity implements OnTouchListener {
 				R.drawable.hide);
 		drawView.setOnTouchListener(this);
 		setContentView(drawView);
-		
-		//drawView.odkryta[1][1]=true;
-		//drawView.invalidate();
+
+		// drawView.odkryta[1][1]=true;
+		// drawView.invalidate();
 
 	}
 
