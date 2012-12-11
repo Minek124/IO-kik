@@ -122,6 +122,7 @@ public class GameActivity extends Activity implements OnTouchListener {
 			imgX = -1;
 			imgY = -1;
 			
+			
 			for (int i = 0; i < maxX; i++) {
 				if ((x >= (10 * (i + 1) + imgWidth * i))
 						&& (x <= (10 * (i + 1) + imgWidth * (i + 1)))) {
@@ -169,14 +170,16 @@ public class GameActivity extends Activity implements OnTouchListener {
 			if (delay) {
 
 				if ((imgX != -1) && (imgY != -1)) {
-					if (drawView.tab[imgY][imgX] != drawView.tab[paraY][paraX]) {
-						drawView.odkryta[imgY][imgX] = false;
-						drawView.odkryta[paraY][paraX] = false;
-						ileOdkrytych = ileOdkrytych - 2;
-						drawView.postInvalidateDelayed(1000);
-						
+					
+						if (drawView.tab[imgY][imgX] != drawView.tab[paraY][paraX]) {
+							drawView.odkryta[imgY][imgX] = false;
+							drawView.odkryta[paraY][paraX] = false;
+							ileOdkrytych = ileOdkrytych - 2;
+							drawView.postInvalidateDelayed(1000);
+
+						}
 					}
-				}
+				
 			}
 		}
 		return true;

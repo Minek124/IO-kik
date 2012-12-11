@@ -120,8 +120,6 @@ public class Test extends ActivityInstrumentationTestCase2<MainActivity> {
 	
 	public void testRozdzielnosc() {
 		
-		int fullWidth = mainLayout.getWidth();
-		int fullHeight = mainLayout.getHeight();
 		
 		int[] mainLayoutLocation = new int[2];
 		mainLayout.getLocationOnScreen(mainLayoutLocation);// 0 50
@@ -160,8 +158,6 @@ public class Test extends ActivityInstrumentationTestCase2<MainActivity> {
 
 public void testRownosci() {
 		
-		int fullWidth = mainLayout.getWidth();
-		int fullHeight = mainLayout.getHeight();
 		
 		int[] mainLayoutLocation = new int[2];
 		mainLayout.getLocationOnScreen(mainLayoutLocation);// 0 50
