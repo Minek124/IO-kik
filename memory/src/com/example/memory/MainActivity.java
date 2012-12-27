@@ -10,11 +10,40 @@ import android.view.View;
 
 public class MainActivity extends Activity {
 
-
+	boolean isTemp;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        Intent intent=getIntent();
+        isTemp=intent.getBooleanExtra("temp", false);
+        if(isTemp){
+        	setContentView(R.layout.activity_main_temp);
+        }else{
+        	setContentView(R.layout.activity_main);
+        }
+    }
+    
+    public void onResume(){
+    	super.onResume();
+    	Intent intent=getIntent();
+        isTemp=intent.getBooleanExtra("temp", false);
+        if(isTemp){
+        	setContentView(R.layout.activity_main_temp);
+        }else{
+        	setContentView(R.layout.activity_main);
+        }
+    }
+    
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+    
+    public void resumeClick(View view){
+    	Intent intent = new Intent(this, GameActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+		
     }
     public void newGameClick(View view){
     	Intent intent = new Intent(this, Newgame.class);
@@ -35,6 +64,12 @@ public class MainActivity extends Activity {
     	
     }
     public void exitClick(View view){
-    	android.os.Process.killProcess(android.os.Process.myPid());
+    	finish();
+    	if(isTemp){
+    		Intent intent = new Intent(this, GameActivity.class);
+    		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    		intent.putExtra("EXIT", true);
+    		startActivity(intent);
+    	}
     }
 }
