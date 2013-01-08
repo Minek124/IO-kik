@@ -92,6 +92,7 @@ public class GameFinished extends Activity {
 					tab2.add(i, time);
 					tab3.add(i, movements);
 					wpisano = true;
+					break;
 				}
 			}
 			if (!wpisano) {

@@ -1,12 +1,9 @@
 package com.example.memory;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
-
 
 public class MainActivity extends Activity {
 
@@ -21,6 +18,16 @@ public class MainActivity extends Activity {
         }else{
         	setContentView(R.layout.activity_main);
         }
+    }
+    
+    public void onBackPressed(){
+    	finish();
+    	if(isTemp){
+    		Intent intent = new Intent(this, GameActivity.class);
+    		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    		intent.putExtra("EXIT", true);
+    		startActivity(intent);
+    	}
     }
     
     public void onResume(){
@@ -43,7 +50,6 @@ public class MainActivity extends Activity {
     	Intent intent = new Intent(this, GameActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(intent);
-		
     }
     public void newGameClick(View view){
     	Intent intent = new Intent(this, Newgame.class);
