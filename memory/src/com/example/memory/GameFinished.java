@@ -50,6 +50,14 @@ public class GameFinished extends Activity {
 
 	}
 
+	public void onBackPressed(){
+		finish();
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		intent.putExtra("temp", false);
+		startActivity(intent);
+	}
+	
 	public void menuButtonClick(View view) {
 		finish();
 		Intent intent = new Intent(this, MainActivity.class);
